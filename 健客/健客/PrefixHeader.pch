@@ -1,0 +1,110 @@
+//工具类头文件
+#import "LFFTool.h"
+#import "LFFView.h"
+#import "UIView+Extension.h" //计算.x.y.maxX...
+#import "AFNetworking.h"
+#import "MJRefresh.h"
+#import "UIImageView+WebCache.h"
+#import "MBProgressHUD.h"
+
+#import "MJChiBaoZiHeader.h"
+#import "MJChiBaoZiFooter.h"
+
+#import "WYPopoverController.h"
+#import "TFHpple.h"
+
+#import "DBManger.h"
+
+
+
+//LFFLog
+#ifdef DEBUG
+#define LFFLog(...) NSLog(__VA_ARGS__)
+#else
+#define LFFLog(...)
+#endif
+
+//宏集合
+#define LFFVersion @"saveVersion"
+#define LFFScreenW [UIScreen mainScreen].bounds.size.width
+#define LFFScreenH [UIScreen mainScreen].bounds.size.height
+
+#define LFFFont(size) [UIFont systemFontOfSize:size]
+#define LFFImage(name) [UIImage imageNamed:name]
+#define LFFImageSelect(name) [LFFImage(name) imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]
+
+//复用cell 宏
+#define LFFToalItemsInSection (_dataArray1.count*4000)
+#define LFFDefaulItems  (_dataArray1.count*4000/2)
+
+//背景色
+#define LFFBGColor [[UIColor alloc] initWithRed:233/255.0 green:233/255.0 blue:233/255.0 alpha:1]
+
+//cell高度宏
+#define CELLHeight 44*1.3
+
+//消息通知中心 通知名
+#define JUMP0 @"jump0"
+#define JUMP1 @"jump1"
+#define JUMP2 @"jump2"
+#define JUMP3 @"jump3"
+
+
+//代表当前section是否是展开
+#define kIsExpand @"isExpand"
+//当前section对应的数组
+#define kDataArray @"dataArray"
+
+
+//接口
+//首页
+#define HomePage @"http://api.jianke.com/HomePage/getHomePageLists?deviceType=2&loginName=&versionCode=3"
+
+//全部分类-
+#define SubCategroyURL @"http://api.jianke.com/HomePage/searchByType?currentpage=%d&deviceType=2&doubleprice=&icotype=&medictype=&pagerows=10&searchType=0&typeId=%@&versionCode=3"
+//currentpage //typeId
+
+//对症找药
+//心血管病
+//高血压 //id=%@
+#define FindMdeicDetailURL @"http://api.jianke.com/HomePage/searchByDisease?deviceType=2&id=%@&versionCode=3"
+
+
+//商品详情页 priductCode=%@
+#define ProductDetailURL @"http://api.jianke.com/HomePage/getProductDetials?deviceType=2&loginName=&priductCode=%@&uniquedid=C5EBAD26-AD3E-4EFC-946C-B6981EEBD8D8&versionCode=3"
+
+//评论页  priductId=%@ currentpage=%d
+#define CommentURL @"http://api.jianke.com/HomePage/getProductEvaluation?currentpage=%d&deviceType=2&pagerows=10&priductId=%@&versionCode=3"
+
+
+
+
+//搜过页1
+//查询  //searchWord=%E4%BA%86
+//http://api.jianke.com/HomePage/searchByWordTips?deviceType=2&searchWord=%E4%BA%86&versionCode=3
+#define SearchURL1 @"http://api.jianke.com/HomePage/searchByWordTips?deviceType=2&searchWord=%@&versionCode=3"
+//搜索页2
+//http://api.jianke.com/HomePage/searchByWordResult?currentpage=1&deviceType=2&doubleprice=&icotype=&medictype=&pagerows=10&searchType=0&searchWord=%E4%BA%86&versionCode=3
+//currentpage=1  //searchWord=%E4%BA%86
+#define SearchURL2 @"http://api.jianke.com/HomePage/searchByWordResult?currentpage=%d&deviceType=2&doubleprice=&icotype=&medictype=&pagerows=10&searchType=0&searchWord=%@&versionCode=3"
+
+
+
+//查询两性健康分类成功！
+//http://api.jianke.com/HomePage/getClassId?deviceType=2&id=1&versionCode=3
+#define GetClassTowSex @"http://api.jianke.com/HomePage/getClassId?deviceType=2&id=1&versionCode=3"
+//跟多两性健康
+//http://api.jianke.com/HomePage/getMore?classId=3462&currentPage=1&deviceType=2&id=1&pageRows=10&versionCode=3
+//classId=3462  //currentPage=1
+#define GetClassTowSex1 @"http://api.jianke.com/HomePage/getMore?classId=%@&currentPage=%@&deviceType=2&id=1&pageRows=10&versionCode=3"
+
+
+
+//"查询中西药分类成功
+//http://api.jianke.com/HomePage/getClassId?deviceType=2&id=2&versionCode=3
+#define GetClassChinese @"http://api.jianke.com/HomePage/getClassId?deviceType=2&id=2&versionCode=3"
+//"查询更多中西药品小分类成功
+//http://api.jianke.com/HomePage/getMore?classId=01&currentPage=1&deviceType=2&id=2&pageRows=10&versionCode=3
+//classId=%@ currentPage=%@ 
+#define GetClassChinese1 @"http://api.jianke.com/HomePage/getMore?classId=%@&currentPage=%@&deviceType=2&id=2&pageRows=10&versionCode=3"
+
