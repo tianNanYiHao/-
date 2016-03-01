@@ -25,7 +25,7 @@
     [super viewDidLoad];
     
     [self createtableview];
-    [self initData];
+    [self initDta];
     
    
     
