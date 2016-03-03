@@ -18,7 +18,6 @@
     UIScrollView *_backGroundScollView;// 背景滚动视图
     UIView *_adverView; //广告页View
     UIScrollView *_adverScrollView; //广告页滚动视图
-
     
     UIImageView *_adverIv; //广告页滚动图片
     UIView *_coverView; //装按钮的view
@@ -55,6 +54,7 @@
     _backGroundScollView.alwaysBounceVertical = YES;
     _backGroundScollView.showsVerticalScrollIndicator = NO;
     _backGroundScollView.backgroundColor = LFFBGColor;
+    NSLog(@"1111111111111111111111111111111111");
 
     
     //1 广告页view
